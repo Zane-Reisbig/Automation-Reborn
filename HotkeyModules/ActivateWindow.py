@@ -1,10 +1,33 @@
-import pywinauto
+import win32gui
 import typing
+from time import sleep
 
-def activateWindow(windowName:typing.Pattern|str):
+def windowEnumerationHandler(hwnd, top_windows):
+    top_windows.append((hwnd, win32gui.GetWindowText(hwnd)))
+
+def activateWindowBack(name):
+    try:
+        if(__name__ != "__main__"):
+            top_windows = []
+            win32gui.EnumWindows(windowEnumerationHandler, top_windows)
+            for i in top_windows:
+                if name in i[1].lower():
+                    win32gui.ShowWindow(i[0],5)
+                    win32gui.SetForegroundWindow(i[0])
+                    break
+            print("Window Activation Confirmed")
+            return True
+    except:
+        print("Error in activating Window")
+        return False
+
+
+# When passed a string name this function will activate that window 
+# and prepare it to handle keystrokes
+ 
+def activateWindow(name):
     """
         Brings the window to the front and sets the focus
     """
-    app = pywinauto.Application().connect(title_re=f"{windowName}")
-    app.top_window().set_focus()
-    app.top_window().wait('visible')
+    x = activateWindowBack(name)
+    sleep(0.03)

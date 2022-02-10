@@ -1,4 +1,3 @@
-from asyncore import loop
 import keyboard as kb
 import time
 
@@ -11,6 +10,8 @@ def hardCatch(keys:list[str,str,str]) -> str:
     while True:
         for key in keys:
             if kb.is_pressed(key):
+                while kb.is_pressed(key):
+                    time.sleep(0.1)
                 return key
 
 

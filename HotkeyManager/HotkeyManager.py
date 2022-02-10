@@ -17,6 +17,7 @@ class HotkeyManager:
         self.currentMappingAlias = None
         self.cycleBindingsMaster = cycleBindingsMaster
         self.isFinalized = False
+        keyboard.add_hotkey(self.cycleBindingsMaster, self.cycleMappings)
 
     def ADDMAPPING(self, alias: str, reference: dict[str:Hotkey]) -> None:
         for i in reference:
@@ -95,7 +96,10 @@ class HotkeyManager:
                                     hotKeyOffending = self.cycleBindingsMaster
                                     raise Exception(f"Hotkey conflict\n{hotKeyOffending} is bound to persistant hotkey: {item[1]} and Master Hotkey")
 
+        self.__registerPersistant()
+
         print("HotkeyManager finalized")
+        print("Ready to start...")
 
     def cycleMappings(self) -> None:
         if not self.isFinalized:
@@ -124,15 +128,18 @@ class HotkeyManager:
         for i in self.currentMapping.items():
             keyboard.add_hotkey(
                 i[1].getHotkey(),
-                i[1].getCallback(),i[1].getArgs(),
+                i[1].triggerCallback,i[1].getArgs(),
             )
         
-        for i in self.persistantHotkeys:
-            keyboard.add_hotkey(
-                i.getHotkey(),
-                i.getCallback(),i.getArgs(),
-            )
-        
+        self.__registerPersistant()
         keyboard.add_hotkey(self.cycleBindingsMaster, self.cycleMappings)
 
         print("Hotkeys registered\n")
+
+    def __registerPersistant(self) -> None:
+        for i in self.persistantHotkeys:
+            keyboard.add_hotkey(
+                i.getHotkey(),
+                i.triggerCallback,i.getArgs(),
+            )
+        
