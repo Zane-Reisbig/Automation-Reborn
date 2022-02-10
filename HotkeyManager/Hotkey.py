@@ -1,5 +1,10 @@
+import sys
+sys.path.append("..")
+
 from threading import Thread
+from HotkeyModules.WaitForRelease import waitForRelease
 import types
+
 
 class Hotkey:
     """
@@ -16,6 +21,9 @@ class Hotkey:
         self.useKwargs = True if type(args) == dict else False
 
     def triggerCallback(self) -> None:
+        print("Waiting For Release")
+        waitForRelease(self.hotkey)
+
         if self.useKwargs:
             thread = Thread(
                 target=self.callback,

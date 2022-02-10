@@ -125,8 +125,12 @@ class KeySender:
             if not handled:
                 inLineArgs = key.split(",")[1:]
                 amount = 1
-                waitTime = 0
-                cleanKey = key[0:key.index(",")]
+                waitTime = 0.4
+                if "," in key:
+                    cleanKey = key[0:key.index(",")]
+                else:
+                    cleanKey = key
+
                 if len(inLineArgs) >= 1:
                     amount = int(inLineArgs[0])
                     if len(inLineArgs) >= 2:

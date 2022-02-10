@@ -15,4 +15,5 @@ def waitForRelease(combination:str) -> None:
             else:
                 releasedCount += 1
         if releasedCount == len(keyArrs):
+            print("released")
             return
