@@ -1,0 +1,5 @@
+incrementNext:False
+replaceOriginal:True
+amountOfClaims:0
+totalClaims:23 * 8 
+click:1

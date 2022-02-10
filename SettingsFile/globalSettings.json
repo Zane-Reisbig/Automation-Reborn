@@ -1,0 +1,37 @@
+{
+    "openClaimArgs": {
+        "hotkey": "f13",
+        "reprocess": false,
+        "click": 1,
+        "f3": true,
+        "suffix": 1,
+        "moveToWindow": true,
+        "highlight": false,
+        "checkReplacement": false
+    },
+    "transferType": {
+        "subscriberID": {
+            "name": "Subscriber",
+            "lineTabAmount": 5,
+            "downAmountFacility": 0,
+            "downAmountMedical": 1,
+            "inqTabAmount": 5
+        },
+
+        "memberID": {
+            "name": "Member",
+            "lineTabAmount": 5,
+            "downAmountFacility": 2,
+            "downAmountMedical": 1,
+            "inqTabAmount": 5
+        },
+
+        "serviceProvider": {
+            "name": "Service Prov",
+            "lineTabAmount": 5,
+            "downAmountFacility": 2,
+            "downAmountMedical": 1,
+            "inqTabAmount": 6
+        }
+    }
+}

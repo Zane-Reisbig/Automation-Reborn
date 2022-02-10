@@ -1,0 +1,104 @@
+
+EDI Health Care Claim (Facility / Institutional) Batch Sequence Number: C40570 - 20210722Batch: 118793461 Claim #: 274825798800 Functional Category: 005010X223A2  
+Sender Receiver InformationSubmitter  
+CHC3 
+ETIN: CHC3 
+Info Contact: PRODUCT SUPPORT
+Ph: 8005278133FAX: 5635854544 Receiver  
+PRIORITY HEALTH 
+ETIN: PRIORITY 
+Information SourceProvider Type: Billing 
+Health Care Provider Taxonomy Code 273R00000X
+Billing Provider  
+ST MARY MERCY HOSP 
+NPI: 1790706901
+36475 FIVE MILE ROAD
+LIVONIA MI 481541971
+EIN: 383521763
+Info Contact: ST MARY MERCY HOSP
+Ph: 7347123700
+Pay-to Provider  
+PO BOX 776485
+CHICAGO IL 606776485 Subscriber Information
+Payer Responsibility Sequence: Primary
+Relationship: Self
+Claim Filing Indicator: Commercial Insurance Co.NSF Reference:CA0-23.0 (F), DA0-05.0 (F)
+Insured or Subscriber  
+WARE GAREY L
+Mbr ID: 94897128700
+36571 MARLER ST
+LIVONIA MI 48154
+Date of Birth: 06/21/1949 Sex: Male Payer  
+PRIORITY HEALTH 
+Payor ID: PRIORITY HEALTH 
+Claim Line InformationClaim Submitter’s Identifier: H105000106858700
+Total Claim Amt: $22239.40
+Bill Type & Frequency: 111 Provider Signature on File: Missing
+Provider Accept Assignment: Assigned
+Assignment of Benefits Indicator: Yes
+Release of Information: Yes, Provider has a Signed Statement Permitting Release of Medical Billing Data Related to a Claim  
+ 
+EDI Determined Information: 
+Member ID: 948971287-00
+Group Number: 792092
+Facility PRPR_ID: 800000734
+Provider PRPR_ID: 800000734
+Relationship: Subscriber
+PH DCN: 274825798800 
+Discharge: 1700
+Statement: 07/08/2021 - 07/19/2021
+Admission: 202107080000
+Admission Type: 2
+Admission Source: D
+Patient Status: 06
+Clm Nbr: 2120310792417213870
+Prior Auth Nbr: 0707WDE2A
+Medical Record Identification Number: 101941498
+Claim Diagnosis Codes
+1 - Principal DX F23 - Y - Present on Admission
+2 - Admitting Diagnosis Code: F29
+3 - Diagnosis Related Group (DRG): 885
+4 - Other Diagnosis Code: E43 - Y - Present on Admission
+5 - Other Diagnosis Code: I161 - Y - Present on Admission
+6 - Other Diagnosis Code: Z681
+7 - Other Diagnosis Code: N1830 - Y - Present on Admission
+8 - Other Diagnosis Code: D631 - Y - Present on Admission
+9 - Other Diagnosis Code: E1122 - Y - Present on Admission
+10 - Other Diagnosis Code: E11649 - Y - Present on Admission
+11 - Other Diagnosis Code: E778 - Y - Present on Admission
+12 - Other Diagnosis Code: E785 - Y - Present on Admission
+13 - Other Diagnosis Code: E8351 - Y - Present on Admission
+14 - Other Diagnosis Code: E860 - Y - Present on Admission
+15 - Other Diagnosis Code: G629 - Y - Present on Admission
+16 - Other Diagnosis Code: H9190 - Y - Present on Admission
+17 - Other Diagnosis Code: I129 - Y - Present on Admission
+18 - Other Diagnosis Code: M1990 - Y - Present on Admission
+19 - Other Diagnosis Code: N401 - Y - Present on Admission
+20 - Other Diagnosis Code: Z79899
+21 - Other Diagnosis Code: Z9114
+22 - Other Diagnosis Code: Z9119
+23 - Occurrence Span: 71
+24 - Value: 01 Amt: $1404.00
+25 - Value: 80 Amt: $11.00
+26 - Value: A3 Amt: $22239.40
+27 - Condition: C1
+28 - Condition: C5 
+Physician InformationAttending Physician  
+WEDES SAMUEL 
+NPI: 1194031062
+Provider Type: Attending 
+Health Care Provider Taxonomy Code 2084P0800X 
+Institutional Claim Service Lines
+ REV PROCEDURE BASIS QTY AMT Not Covered AMT DATE MISC 
+ 
+Line 1 0124  Days 11 $21131.00  Prv Control Nbr: H105000106858700-1 
+ 
+Line 2 0250  Unit 79 $271.40  Prv Control Nbr: H105000106858700-2 
+ 
+Line 3 0301  Unit 2 $168.00  Prv Control Nbr: H105000106858700-3 
+ 
+Line 4 0305  Unit 2 $146.00  Prv Control Nbr: H105000106858700-4 
+ 
+Line 5 0421  Unit 3 $300.00  Prv Control Nbr: H105000106858700-5 
+ 
+Line 6 0424  Unit 1 $223.00  Prv Control Nbr: H105000106858700-6 
