@@ -1,7 +1,0 @@
-openClaimBind:alt+1
-reopenClaimBind:ctrl+r
-eobCode:W25
-note:34496
-repro:False
-noteBody:Claim will no longer deny with p16 (if claim denies with a different clinical edit that is ok and reprocess)
-claimNumber:44
