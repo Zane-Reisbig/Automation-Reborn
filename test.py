@@ -32,14 +32,14 @@ Hotkey(hotkey="ctrl+alt+n", callback=assertTop.assertTopWindow, args=("Notepad",
 def openClaim():
     print("This is an example")
 
-manager.ADDPERSISTANT(Hotkey("alt+1", openClaim, ())) # Adds a persistant hotkey, which will be added to the hotkey manager
+manager.ADDPERSISTANT(Hotkey("ctrl+alt+c", openClaim, ())) # Adds a persistant hotkey, which will be added to the hotkey manager
                                                       # This will persist through module changes
 
 manager.ADDMAPPING( # Add a mapping to the hotkey manager
     "notePad1", # Alias for the hotkey module
     {   
         "print1" : Hotkey("alt+1", controlNotepad, ("One notePad1 Yea\n",)),
-        "print2" : Hotkey("alt+2", controlNotepad, ("Two Notepad2 Yea\n",)),
+        "print2" : Hotkey("alt+3", controlNotepad, ("Two Notepad2 Yea\n",)),
     }
 )
 

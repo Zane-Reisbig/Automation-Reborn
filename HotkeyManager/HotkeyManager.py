@@ -63,11 +63,14 @@ class HotkeyManager:
         if type(reference) != Hotkey:
             raise TypeError("reference must be a Hotkey object")
         
-        self.keyMapBindings.update({reference.getCallbackName(): reference})
         self.persistantHotkeys.append(reference)
 
     def FINALIZE(self) -> None:
         self.isFinalized = True
+
+        persistantHotkeysBinds = []
+        for i in self.persistantHotkeys:
+            persistantHotkeysBinds.append([i.getHotkey(), i.getCallbackName()])
 
         for i in self.keyMapBindings.items():
             for ii in i[1]:
@@ -78,7 +81,19 @@ class HotkeyManager:
                             position1 = ii[1] + 1
                             position2 = iii[1] + 1
                             raise Exception(f"Hotkey conflict\n{hotKeyOffending} is bound to both items at positions {position1} and {position2} in mapping: {i[0]}")
-
+                        if ii[0] == self.cycleBindingsMaster:
+                            hotKeyOffending = ii[0]
+                            position = ii[1] + 1
+                            raise Exception(f"Hotkey conflict\n{hotKeyOffending} is bound to item at position {position} in mapping: {i[0]} and Master Hotkey")
+                        for item in persistantHotkeysBinds:
+                            for key in item:
+                                if key == ii[0]:
+                                    hotKeyOffending = ii[0]
+                                    position = ii[1] + 1
+                                    raise Exception(f"Hotkey conflict\n{hotKeyOffending} is bound to item at position {position} in mapping: {i[0]} and persistant hotkey: {item[1]}")
+                                if key == self.cycleBindingsMaster:
+                                    hotKeyOffending = self.cycleBindingsMaster
+                                    raise Exception(f"Hotkey conflict\n{hotKeyOffending} is bound to persistant hotkey: {item[1]} and Master Hotkey")
 
         print("HotkeyManager finalized")
 
