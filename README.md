@@ -1,6 +1,7 @@
 # Automation-Reborn
 
-```python
+Dependencies
+```
 pip install keyboard
 pip install win32gui
 ```
