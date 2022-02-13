@@ -28,6 +28,7 @@ def activateWindowBack(name):
 def activateWindow(name):
     """
         Brings the window to the front and sets the focus
+        name: The name of the window to activate, the window name must contain the passed name
     """
     x = activateWindowBack(name)
     sleep(0.03)

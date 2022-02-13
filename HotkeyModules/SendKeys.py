@@ -7,6 +7,13 @@ class KeySender:
     """
         This function is used to type and send keystrokes to the computer
         See example in test.py for example usage
+        usedModules: Callbacks to be able to be called inline when sending keys
+            - When modules are passed, they can have default args and kwargs
+            - If a module is passed without any args, the args will be gotten from the inline args, see the function description for more info on how the inline system works
+        debug: When True will read in the passed dictionary and set the debugs
+        debugCommands: Dictionary of commands to be used when debugging
+            - allDelay:int -> Every action will have this amount of delay
+            - logAll:bool -> Every action will be logged to the console
     """
     def __init__(self,
         usedModules:dict[str, tuple[types.FunctionType, tuple|dict]],
@@ -68,6 +75,22 @@ class KeySender:
             return value
 
     def sendKeys(self, keyList:list[str]) -> None:
+        """
+            Interprets the passed list of keys and sends them to the computer
+            keyList: list of keys to send
+            $ is the prefix for an inline command
+            default commands are:
+                - write:str -> Writes the passed string to the console
+                - wait:int -> Waits for the passed amount of seconds
+            
+            Passed modules can be passed args by just adding a comma after the command is called, kwargs are not supported
+            example: $write,"Hello World"
+
+            Args can be passed a type with a colon after the command and the type of the arg
+            example: $sleep,5:int
+            Args will be defaulted to str if no type is given
+
+        """
         if self.debug:
             self._setDebugs()
         

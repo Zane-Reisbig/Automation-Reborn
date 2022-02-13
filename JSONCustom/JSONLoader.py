@@ -35,6 +35,12 @@ class ValueLogger:
 # Point by point comments above the function delcarations
 # Finer details on lines as needed
 class JSON:
+    """
+        My Version of the JSON library to make it easier to use
+        Manages multiple JSON files and allows switching between them on the fly
+        Adds in a typing system as well
+        When returning a value, it will return the value as the type specified by the type parameter
+    """
     def __init__(self, fileName:TextIOWrapper) -> None:
         self.type = None # When set, all values returned will be of this type
         self.data = None # The JSON data
@@ -43,6 +49,9 @@ class JSON:
     # Sets the name of the JSON file
     # Loads the JSON data
     def setFile(self, fileName:TextIOWrapper) -> None:
+        """
+            Loads a JSON file into the JSON object
+        """
         self.fileName = fileName
         with open(self.fileName) as json_file:
                 self.data = json.load(json_file)
@@ -52,6 +61,14 @@ class JSON:
     # If the type is None, the value is returned as the type it is in the JSON data
     # Optionally logs information about the value to the console if logVar is True
     def get(self, value:list[str], returnType:JSONTypes=None, logVar:bool=False) -> object:
+        """
+            Gets a value from the JSON file
+            If the value is a list, it will be treated as a path to the value
+            returnType:JSONTypes -> The type to return the value as
+            logVar:bool -> If True, will print information about the value being returned
+        """        
+
+
         currValue = ""
         for (i, val) in enumerate(value):
             if i == 0:
@@ -63,7 +80,7 @@ class JSON:
         if returnType == None:
             returnValue = currValue
         else:
-            values = self.getFirstAndSecond(currValue, returnType.value)
+            values = self._getFirstAndSecond(currValue, returnType.value)
             if returnType == JSONTypes.ADDITION:
                 returnValue = values[0] + values[1]
                 specialOperations = "JSONTypes.ADDITION"
@@ -86,7 +103,7 @@ class JSON:
         return returnValue
 
     # Only used for getting the first and second values when the custom JSON type is used
-    def getFirstAndSecond(self, string:str, splitAt:str)->tuple[float, float]:
+    def _getFirstAndSecond(self, string:str, splitAt:str)->tuple[float, float]:
         stringSplit = string.split(splitAt)
         return float(stringSplit[0]), float(stringSplit[1])
 
