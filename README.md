@@ -1,12 +1,9 @@
 # Automation-Reborn
 
-| Dependencies 	|
-|--------------	|
-| keyboard     	|
-| pywin32      	|
-| pywin32gui   	|
-|              	|
-
+```python
+pip install keyboard
+pip install win32gui
+```
 <h3>The purpose of this library is to make it easy to create automation and macros</h3>
 <p>There are many like it but this one is mine</p>
 
