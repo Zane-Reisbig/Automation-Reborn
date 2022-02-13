@@ -8,11 +8,10 @@ import types
 
 class Hotkey:
     """
-        Holds a hotkey key combo
-        Holds the callback
-        Holds the arguments
-        Calls the callback when triggered in a new thread as to not crash the main thread
-        Holds information for the hotkey manager
+        Contains information for the HotkeyManager
+        hotkey: the key combination i.e. "Ctrl+Shift+A"
+        callback: the function to be called when the hotkey is pressed
+        args: the arguments to be passed to the callback function
     """
     def __init__(self, hotkey:str, callback:types.FunctionType, args:tuple|dict=()):
         self.hotkey = hotkey

@@ -4,8 +4,13 @@ from HotkeyManager.Hotkey import Hotkey
 
 class HotkeyManager:
     """
-        Controls the state and behavior of the hotkey modules passed
-        Allows on the fly switching for hotkeys modules
+        Controls the calling and managment of hotkey modules
+        cycleBindingsMaster: The hotkey that will cycle through the mappings
+        ADDMAPPING: Adds a mapping to the manager
+        ADDPERSISTANT: Adds a persistant hotkey to the manager that will remain thru all mappings
+        FINALIZE: Finalizes the manager, registers all hotkeys, and check for conflicts
+        LISTMAPPINGS: Lists all mappings - After Finalization
+        SETMAPPING: Sets the current mapping - After Finalization
     """
 
     keyMaps = {}

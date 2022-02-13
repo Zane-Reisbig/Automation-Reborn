@@ -4,31 +4,38 @@ import os
 
 class AssertTopWindow:
     """
-        Checks the topmost active window for a certain window name
-        If the window name is the same as the one passed in, the function returns
-        This is used to make sure the window is the one you want to interact with -
-            By blocking the Thread until it returns
+        Checks the topmost active window for a certain window name, when that name is found it will return and the thread will continue
+        addedSuffix: Will be appended to the passed window name every time function is called
+        interval: The interval in which the the program will refresh window reminders
+        exact: Whether or not the window name must be an exact match
+            - True: The window name must be an exact match
+            - False: The title of the window must contain the passed window name, will match the whole word
     """
     def __init__(self, addedSuffix:str="", interval:int=2, exact=True):
         self.addedSuffix = addedSuffix # Sometimes a constant suffix is added to the window name, so you don't have to type it every time
         self.interval = interval # The interval in which the the program will refresh window reminders
         self.exact = exact
 
-    def assertTopWindow(self, window_name:str):
+    def assertTopWindow(self, windowName:str):
+        """
+            Checks the topmost active window for a certain window name, when that name is found it will return and the thread will continue
+            windowName: The name of the window to activate
+        """
+
         loopAmount = 0 # The amount of times the loop has run, for the interval calculations
         while True:
             currentWindowText = win32gui.GetWindowText(win32gui.GetForegroundWindow())
-            if currentWindowText == window_name + self.addedSuffix and self.exact == True:
+            if currentWindowText == windowName + self.addedSuffix and self.exact == True:
                 break
             
-            if window_name + self.addedSuffix in currentWindowText:
+            if windowName + self.addedSuffix in currentWindowText:
                 break
             
             if loopAmount % self.interval == 0:
                 loopAmount = 0
                 os.system("cls")
                 print("Current window: " + currentWindowText)
-                print("Waiting for window: " + window_name + self.addedSuffix)
+                print("Waiting for window: " + windowName + self.addedSuffix)
 
             time.sleep(0.2)
             loopAmount += 1
