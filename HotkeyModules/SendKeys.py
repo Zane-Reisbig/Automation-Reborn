@@ -30,9 +30,15 @@ class KeySender:
         # allDelay:int -> Every action will have this amount of delay
         # logAll:bool -> Every action will be logged to the console
 
+        self.snippets = {
+
+        }        
+
+
         self.reservedPrefixes = [
             "write",
             "wait",
+            "print",
         ]
         # Functions that can be called inline without importing them
 
@@ -73,6 +79,20 @@ class KeySender:
             return int(value)
         else:
             return value
+    
+    def addSnippet(self, name:str, snippet:list[str]) -> None:
+        """
+            Adds a snippet to be able to be called inline
+            Snippets are called inline using the "%" prefix
+            %snippetName
+            name: The name of the snippet
+            snippet: A list of strings that will be parsed
+            The snippet will be parsed just as if it were sent using the sendKeys function
+            There are no arguments that can be passed
+            You are able to call a snippet in a snippet as well.
+            Beware Recursion
+        """
+        self.snippets.update({name: snippet})
 
     def sendKeys(self, keyList:list[str]) -> None:
         """
@@ -100,8 +120,14 @@ class KeySender:
 
             if key.startswith("$"):
                 prefix = self._getPrefix(key)
+            elif key.startswith("%"):
+                prefix = key[1:]
+                self.sendKeys(self.snippets[prefix])
+                handled = True
+                continue
 
             if prefix != None:
+
                 if prefix not in self.reservedPrefixes:
                     function = self.usedModules[prefix][0] 
 
@@ -128,6 +154,12 @@ class KeySender:
                     handled = True
                     if self.logAll:
                         print(f"{repr(prefix)} called using {repr(args)}")
+                
+                elif prefix in self.snippets:
+                    self.sendKeys(self.snippets[prefix])
+                    handled = True
+                    if self.logAll:
+                        print(f"{repr(prefix)} called from snippet")
             
             if not handled:
                 if prefix == "write":
@@ -144,6 +176,13 @@ class KeySender:
 
                     sleep(args)
                     handled = True
+            
+            if not handled:
+                if prefix == "print":
+                    print(key[key.index(",")+1:])
+                    handled = True
+                    if self.logAll:
+                        print(f"{repr(key)} printed")
             
             if not handled:
                 inLineArgs = key.split(",")[1:]

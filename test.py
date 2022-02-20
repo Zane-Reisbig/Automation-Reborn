@@ -17,6 +17,9 @@ keySender = KeySender( # The keySender object is used to send keys to the active
     }
 )
 
+keySender.addSnippet("openMenu", ["alt+o", "alt+c", "$assertTop,Menu"])
+# Able to be called inline with the % prefix as %openMenu
+
 def controlNotepad(toWrite: str):
     keySender.sendKeys([ # Example format for sending keys and using inline functions
         "$activate,.*Notepad",
