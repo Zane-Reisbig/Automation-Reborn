@@ -12,4 +12,4 @@ I wanted to make this purley in python because I like the language and I wanted 
 There are uses for all the things inside this library and I feel like it is easy to use. <br>
 There is an example file and all the code is documented with intelisense support. <br>
 If you have any questions or comments let me know, and start a github issue if you find anything breaking. <br>
-If you feel like fixing it your self feel free to brach and create a pull request, 😄
+If you feel like fixing it yourself feel free to branch and create a pull request, 😄
