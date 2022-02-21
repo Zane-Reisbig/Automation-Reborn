@@ -80,11 +80,11 @@ class KeySender:
         else:
             return value
     
-    def addSnippet(self, name:str, snippet:list[str]) -> None:
+    def addSnippet(self, alias:str, snippet:list[str]) -> None:
         """
             Adds a snippet to be able to be called inline
             Snippets are called inline using the "%" prefix
-            %snippetName
+            Ex: %snippetName
             name: The name of the snippet
             snippet: A list of strings that will be parsed
             The snippet will be parsed just as if it were sent using the sendKeys function
@@ -92,7 +92,7 @@ class KeySender:
             You are able to call a snippet in a snippet as well.
             Beware Recursion
         """
-        self.snippets.update({name: snippet})
+        self.snippets.update({alias: snippet})
 
     def sendKeys(self, keyList:list[str]) -> None:
         """

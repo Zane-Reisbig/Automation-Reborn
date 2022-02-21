@@ -5,7 +5,7 @@ from HotkeyModules.SendKeys import KeySender
 from HotkeyModules.AssertTopWindow import AssertTopWindow
 from HotkeyModules.ActivateWindow import activateWindow
 
-assertTop = AssertTopWindow(addedSuffix="- Remote")
+assertTop = AssertTopWindow(addedSuffix="- Remote") # This is unused in this example, but very handy
 manager = HotkeyManager("ctrl+alt+c") # Controls the switching and storing of hotkeys modules
                                       # a key combo is required to change the module being used
 keySender = KeySender( # The keySender object is used to send keys to the active window
@@ -36,7 +36,7 @@ def openClaim():
     print("This is an example")
 
 manager.ADDPERSISTANT(Hotkey("ctrl+alt+c", openClaim, ())) # Adds a persistant hotkey, which will be added to the hotkey manager
-                                                      # This will persist through module changes
+                                                           # This will persist through module changes
 
 manager.ADDMAPPING( # Add a mapping to the hotkey manager
     "notePad1", # Alias for the hotkey module
