@@ -179,10 +179,11 @@ class KeySender:
             
             if not handled:
                 if prefix == "print":
-                    print(key[key.index(",")+1:])
+                    args = key[key.index(",")+1:]
+                    print(args)
                     handled = True
                     if self.logAll:
-                        print(f"{repr(key)} printed")
+                        print(f"{repr(args)} printed")
             
             if not handled:
                 inLineArgs = key.split(",")[1:]
