@@ -12,19 +12,22 @@ class KeySender:
             - If a module is passed without any args, the args will be gotten from the inline args, see the function description for more info on how the inline system works
         debug: When True will read in the passed dictionary and set the debugs
         debugCommands: Dictionary of commands to be used when debugging
-            - allDelay:int -> Every action will have this amount of delay
-            - logAll:bool -> Every action will be logged to the console
+            - allDelay: Every action will have this amount of delay
+            - logAll: Every action will be logged to the console
     """
     def __init__(self,
         usedModules:dict[str, tuple[types.FunctionType, tuple|dict]],
         debug:bool=False,
-        debugCommands:dict[str, str|int|bool]={}) -> None:
+        debugCommands:dict[str, str|int|bool]={},
+        recursionLimit:int=10) -> None:
 
         self.allDelay = None
         self.logAll = False
         self.usedModules = usedModules
         self.debug = debug
         self.debugCommands = debugCommands
+        self.recursionLevel = 0
+        self.recursionLimit = recursionLimit
         # Current Debugs:
         # Must be passed as a dictionary with the following keys:
         # allDelay:int -> Every action will have this amount of delay
@@ -45,12 +48,15 @@ class KeySender:
     def _setDebugs(self):
         if len(self.debugCommands) == 0:
             raise Exception("No debug commands were given.")
-        
-        if "allDelay" in self.debugCommands:
-            self.allDelay = self.debugCommands["allDelay"]
-        if "logAll" in self.debugCommands:
-            self.logAll = self.debugCommands["logAll"]
 
+        for key in self.debugCommands:
+            if key not in self.reservedPrefixes:
+                raise Exception(f"{key} is not a valid debug command.")
+            else:
+                if key == "allDelay":
+                    self.allDelay = self.debugCommands[key]
+                elif key == "logAll":
+                    self.logAll = self.debugCommands[key]
 
     def _getPrefix(self, string):
         if "," in string:
@@ -90,7 +96,7 @@ class KeySender:
             The snippet will be parsed just as if it were sent using the sendKeys function
             There are no arguments that can be passed
             You are able to call a snippet in a snippet as well.
-            Beware Recursion
+            This function is recursive, so beware about calling the same snippet within a snippet
         """
         self.snippets.update({alias: snippet})
 
@@ -121,11 +127,15 @@ class KeySender:
             if key.startswith("$"):
                 prefix = self._getPrefix(key)
             elif key.startswith("%"):
-                prefix = key[1:]
-                self.sendKeys(self.snippets[prefix])
-                handled = True
-                continue
-
+                if self.recursionLevel < self.recursionLimit:
+                    prefix = key[1:]
+                    self.recursionLevel += 1
+                    self.sendKeys(self.snippets[prefix])
+                    handled = True
+                    continue
+                else:
+                    raise Exception("Recursion level exceeded, program terminated.")
+            
             if prefix != None:
 
                 if prefix not in self.reservedPrefixes:
