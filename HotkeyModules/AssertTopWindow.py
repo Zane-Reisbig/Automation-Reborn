@@ -5,9 +5,9 @@ import os
 class AssertTopWindow:
     """
         Checks the topmost active window for a certain window name, when that name is found it will return and the thread will continue
-        addedSuffix: Will be appended to the passed window name every time function is called
-        interval: The interval in which the the program will refresh window reminders
-        exact: Whether or not the window name must be an exact match
+        addedSuffix:str -> Will be appended to the passed window name every time function is called
+        interval:int -> The interval in which the the program will refresh window reminders
+        exact:bool -> Whether or not the window name must be an exact match
             - True: The window name must be an exact match
             - False: The title of the window must contain the passed window name, will match the whole word
     """
@@ -19,7 +19,7 @@ class AssertTopWindow:
     def assertTopWindow(self, windowName:str):
         """
             Checks the topmost active window for a certain window name, when that name is found it will return and the thread will continue
-            windowName: The name of the window to activate
+            windowName:str -> The name of the window to activate
         """
 
         loopAmount = 0 # The amount of times the loop has run, for the interval calculations

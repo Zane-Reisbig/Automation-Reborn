@@ -5,12 +5,12 @@ from HotkeyManager.Hotkey import Hotkey
 class HotkeyManager:
     """
         Controls the calling and managment of hotkey modules
-        cycleBindingsMaster: The hotkey that will cycle through the mappings
-        ADDMAPPING: Adds a mapping to the manager
-        ADDPERSISTANT: Adds a persistant hotkey to the manager that will remain thru all mappings
-        FINALIZE: Finalizes the manager, registers all hotkeys, and check for conflicts
-        LISTMAPPINGS: Lists all mappings - After Finalization
-        SETMAPPING: Sets the current mapping - After Finalization
+        cycleBindingsMaster:str -> The hotkey that will cycle through the mappings
+        ADDMAPPING -> Adds a mapping to the manager
+        ADDPERSISTANT -> Adds a persistant hotkey to the manager that will remain thru all mappings
+        FINALIZE -> Finalizes the manager, registers all hotkeys, and check for conflicts
+        LISTMAPPINGS -> Lists all mappings - After Finalization
+        SETMAPPING -> Sets the current mapping - After Finalization
     """
 
     keyMaps = {}
@@ -25,6 +25,11 @@ class HotkeyManager:
         keyboard.add_hotkey(self.cycleBindingsMaster, self.cycleMappings)
 
     def ADDMAPPING(self, alias: str, reference: dict[str:Hotkey]) -> None:
+        """
+            Adds a mapping to the manager
+            alias:str -> The alias of the mapping
+            reference:dict[str:Hotkey] -> The mapping itself
+        """
         for i in reference:
             if type(reference[i]) != Hotkey:
                 raise TypeError("reference must be a Hotkey object")
@@ -37,6 +42,10 @@ class HotkeyManager:
         self.keyMaps.update({alias: reference})
 
     def LISTMAPPINGS(self, alias=None) -> None:
+        """
+            Lists all mappings - After Finalization
+            alias:str -> The alias of the mapping to list
+        """
         if alias == None:
             for i in self.keyMaps.items():
                 for ii in i:
@@ -50,6 +59,11 @@ class HotkeyManager:
                 print(i[1].getUnion())
 
     def SETMAPPING(self, alias: str, suppressError=False) -> None:
+        """
+            Sets the current mapping - After Finalization
+            alias:str -> The alias of the mapping to set
+            suppressError:bool -> Suppress error if mapping does not exist
+        """
         if not self.isFinalized:
             raise ValueError("HotkeyManager not finalized\nCall FINALIZE()")
 
@@ -66,12 +80,19 @@ class HotkeyManager:
         self.__registerHotKeys()
 
     def ADDPERSISTANT(self, reference: Hotkey) -> None:
+        """
+            Adds a persistant hotkey to the manager that will remain thru all mappings
+            reference:Hotkey -> The persistant hotkey to add
+        """
         if type(reference) != Hotkey:
             raise TypeError("reference must be a Hotkey object")
         
         self.persistantHotkeys.append(reference)
 
     def FINALIZE(self) -> None:
+        """
+            Finalizes the manager, registers all hotkeys, and checks for conflicts
+        """
         self.isFinalized = True
 
         persistantHotkeysBinds = []
@@ -107,6 +128,9 @@ class HotkeyManager:
         print("Ready to start...")
 
     def cycleMappings(self) -> None:
+        """
+            Cycles through the mappings
+        """
         if not self.isFinalized:
             raise ValueError("HotkeyManager not finalized\nCall FINALIZE()")
 

@@ -4,6 +4,7 @@ def waitForRelease(combination:str) -> None:
     """
         Waits for a key to be released
         The keyboard library has a builtin function for this but I cannot get it to work
+        combonation:str -> The key combination to wait for
     """
     keyArrs = combination.split("+")
     releasedCount = 0

@@ -51,6 +51,7 @@ class JSON:
     def setFile(self, fileName:TextIOWrapper) -> None:
         """
             Loads a JSON file into the JSON object
+            fileName:TextIOWrapper -> The file to load
         """
         self.fileName = fileName
         with open(self.fileName) as json_file:
@@ -64,6 +65,7 @@ class JSON:
         """
             Gets a value from the JSON file
             If the value is a list, it will be treated as a path to the value
+            value:list[str] -> The value to get
             returnType:JSONTypes -> The type to return the value as
             logVar:bool -> If True, will print information about the value being returned
         """        

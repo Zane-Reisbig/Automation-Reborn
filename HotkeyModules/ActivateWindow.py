@@ -25,7 +25,7 @@ def activateWindowBack(name):
 # When passed a string name this function will activate that window 
 # and prepare it to handle keystrokes
  
-def activateWindow(name):
+def activateWindow(name:str) -> bool:
     """
         Brings the window to the front and sets the focus
         name: The name of the window to activate, the window name must contain the passed name

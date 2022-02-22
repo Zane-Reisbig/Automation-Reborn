@@ -33,7 +33,7 @@ class JSONManager:
         """
             Loads a JSON file to the JSONFiles dictionary
             The key for this file is the base name of the file with no extension
-            fileName: The file name to load
+            fileName:str -> The file name to load
         """
         baseFileName = os.path.basename(fileName)[
             0 : os.path.basename(fileName).index(".")
@@ -45,8 +45,8 @@ class JSONManager:
     def getFromCurrent(self, value: list[str], typeOf:object=None) -> object:
         """
             Grabs a value from the currently loaded JSON file
-            value: The value to grab, uses an array instead of the commonly used dictionary syntax
-            typeOf: The type to return the value as
+            value:list[str] -> The value to grab, uses an array instead of the commonly used dictionary syntax
+            typeOf:object -> The type to return the value as
         """
         typeOf = typeOf if typeOf != None else self.flags["returnType"]
 
@@ -61,7 +61,7 @@ class JSONManager:
     def SETCURRENTFILE(self, fileName: str) -> None:
         """
             Sets the current file to the file specified by the fileName/alias
-            fileName: The file name to set as the current file uses the base name of the file without the extension
+            fileName:str -> The file name to set as the current file uses the base name of the file without the extension
         """
         self.currentFile = self.JSONFiles[fileName]
 
@@ -70,9 +70,11 @@ class JSONManager:
     def SETFLAGS(self, flag: str, value: bool) -> None:
         """
             Sets the debug flags for the JSONManager
+            flag:str -> The flag to set
+            value:bool -> The value to set the flag to
             Flags:
-                logVar: If True, will print information about the value being returned
-                returnType: The type to return the value as
+                logVar:bool -> If True, will print information about the value being returned
+                returnType:object -> The type to return the value as
         """
         found = False
         for key in self.flags:
