@@ -7,13 +7,13 @@ class KeySender:
     """
         This function is used to type and send keystrokes to the computer
         See example in test.py for example usage
-        usedModules: Callbacks to be able to be called inline when sending keys
+        usedModules:dict[str, tuple[function, tuple]] -> Callbacks to be able to be called inline when sending keys
             - When modules are passed, they can have default args and kwargs
             - If a module is passed without any args, the args will be gotten from the inline args, see the function description for more info on how the inline system works
-        debug: When True will read in the passed dictionary and set the debugs
-        debugCommands: Dictionary of commands to be used when debugging
-            - allDelay: Every action will have this amount of delay
-            - logAll: Every action will be logged to the console
+        debug:bool -> When True will read in the passed dictionary and set the debugs
+        debugCommands:dict[str, any] -> Dictionary of commands to be used when debugging
+            - allDelay:int -> Every action will have this amount of delay
+            - logAll:bool -> Every action will be logged to the console
     """
     def __init__(self,
         usedModules:dict[str, tuple[types.FunctionType, tuple|dict]],
@@ -91,8 +91,8 @@ class KeySender:
             Adds a snippet to be able to be called inline
             Snippets are called inline using the "%" prefix
             Ex: %snippetName
-            name: The name of the snippet
-            snippet: A list of strings that will be parsed
+            name:str -> The name of the snippet
+            snippet:list[str] -> A list of strings that will be parsed
             The snippet will be parsed just as if it were sent using the sendKeys function
             There are no arguments that can be passed
             You are able to call a snippet in a snippet as well.
@@ -108,6 +108,7 @@ class KeySender:
             default commands are:
                 - write:str -> Writes the passed string to the console
                 - wait:int -> Waits for the passed amount of seconds
+                - print:str -> Prints the passed string to the console
             
             Passed modules can be passed args by just adding a comma after the command is called, kwargs are not supported
             example: $write,"Hello World"
