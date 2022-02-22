@@ -19,7 +19,7 @@ class KeySender:
         usedModules:dict[str, tuple[types.FunctionType, tuple|dict]],
         debug:bool=False,
         debugCommands:dict[str, str|int|bool]={},
-        recursionLimit:int=10) -> None:
+        recursionLimit:int=1) -> None:
 
         self.allDelay = None
         self.logAll = False
@@ -83,6 +83,8 @@ class KeySender:
                 raise Exception(f"{repr(value)} is not a valid boolean value.")
         elif conversion == "int":
             return int(value)
+        elif conversion == "float":
+            return float(value)
         else:
             return value
     
@@ -107,14 +109,14 @@ class KeySender:
             $ is the prefix for an inline command
             default commands are:
                 - write:str -> Writes the passed string to the console
-                - wait:int -> Waits for the passed amount of seconds
+                - wait:int -> Waits for the passed amount of seconds, args are converted to float automatically
                 - print:str -> Prints the passed string to the console
             
             Passed modules can be passed args by just adding a comma after the command is called, kwargs are not supported
             example: $write,"Hello World"
 
             Args can be passed a type with a colon after the command and the type of the arg
-            example: $sleep,5:int
+            example: $print,5:int
             Args will be defaulted to str if no type is given
 
         """
@@ -133,6 +135,7 @@ class KeySender:
                     self.recursionLevel += 1
                     self.sendKeys(self.snippets[prefix])
                     handled = True
+                    self.recursionLevel -= 1
                     continue
                 else:
                     raise Exception("Recursion level exceeded, program terminated.")
