@@ -43,6 +43,11 @@ class KeySender:
             "wait",
             "print",
         ]
+
+        self.reservedDebugs = {
+            "allDelay",
+            "logAll"
+        }
         # Functions that can be called inline without importing them
 
     def _setDebugs(self):
@@ -50,7 +55,7 @@ class KeySender:
             raise Exception("No debug commands were given.")
 
         for key in self.debugCommands:
-            if key not in self.reservedPrefixes:
+            if key not in self.reservedDebugs:
                 raise Exception(f"{key} is not a valid debug command.")
             else:
                 if key == "allDelay":
@@ -157,6 +162,8 @@ class KeySender:
                     else:
                         args = self.usedModules[prefix][1]
 
+
+                    returnVal = None
                     if type(args) == tuple:
                         returnVal = function(*args)
                     elif type(args) == dict:
@@ -170,8 +177,8 @@ class KeySender:
                         print(f"{repr(prefix)} called using {repr(args)}")
                 
                 elif prefix in self.snippets:
-                    self.sendKeys(self.snippets[prefix])
                     handled = True
+                    self.sendKeys(self.snippets[prefix])
                     if self.logAll:
                         print(f"{repr(prefix)} called from snippet")
             
@@ -184,22 +191,23 @@ class KeySender:
             
             if not handled:
                 if prefix == "wait":
+                    handled = True
                     args = float(key[key.index(",")+1:])
                     if self.logAll:
                         print(f"Waiting for {repr(args)} seconds")
 
                     sleep(args)
-                    handled = True
             
             if not handled:
                 if prefix == "print":
+                    handled = True
                     args = key[key.index(",")+1:]
                     print(args)
-                    handled = True
                     if self.logAll:
                         print(f"{repr(args)} printed")
             
             if not handled:
+                handled = True
                 inLineArgs = key.split(",")[1:]
                 amount = 1
                 waitTime = 0.4
@@ -223,5 +231,9 @@ class KeySender:
             if kb.is_pressed("end"):
                 print("Program Ended")
                 os._exit(1)
+            
+            if not handled:
+                print(f"{repr(cleanKey)} not found")
+                raise ValueError
             
             self._checkPause()
