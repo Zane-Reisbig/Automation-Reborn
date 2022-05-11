@@ -16,10 +16,11 @@ class KeySender:
             - logAll:bool -> Every action will be logged to the console
     """
     def __init__(self,
-        usedModules:dict[str, tuple[types.FunctionType, tuple|dict]],
+        usedModules:dict[str, tuple[types.FunctionType, tuple|dict]] = {},
         debug:bool=False,
         debugCommands:dict[str, str|int|bool]={},
-        recursionLimit:int=1) -> None:
+        recursionLimit:int=1,
+        exitKey = "end") -> None:
 
         self.allDelay = None
         self.logAll = False
@@ -28,6 +29,7 @@ class KeySender:
         self.debugCommands = debugCommands
         self.recursionLevel = 0
         self.recursionLimit = recursionLimit
+        self.exitKey = exitKey
         # Current Debugs:
         # Must be passed as a dictionary with the following keys:
         # allDelay:int -> Every action will have this amount of delay
@@ -70,7 +72,7 @@ class KeySender:
             while True:
                 if kb.is_pressed("pause"):
                     break
-                sleep(0.1)
+                sleep(0.3)
     
     def _convert(self, value:str, conversion:str) -> str:
         value = value[0:value.index(":")]
@@ -202,7 +204,7 @@ class KeySender:
             if not handled:
                 inLineArgs = key.split(",")[1:]
                 amount = 1
-                waitTime = 0.4
+                waitTime = self.allDelay if self.allDelay != None else 0.3
                 if "," in key:
                     cleanKey = key[0:key.index(",")]
                 else:
@@ -220,7 +222,7 @@ class KeySender:
                 if self.logAll:
                     print(f"{repr(cleanKey)} sent {repr(amount)} times with {repr(waitTime)} seconds between each")
             
-            if kb.is_pressed("end"):
+            if kb.is_pressed(self.exitKey):
                 print("Program Ended")
                 os._exit(1)
             

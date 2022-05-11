@@ -16,7 +16,7 @@ class AssertTopWindow:
         self.interval = interval # The interval in which the the program will refresh window reminders
         self.exact = exact
 
-    def assertTopWindow(self, windowName:str):
+    def assertTopWindow(self, windowName:str) -> bool:
         """
             Checks the topmost active window for a certain window name, when that name is found it will return and the thread will continue
             windowName:str -> The name of the window to activate
@@ -39,3 +39,8 @@ class AssertTopWindow:
 
             time.sleep(0.2)
             loopAmount += 1
+        
+        os.system("cls")
+        print("Window Confirmed: " + currentWindowText)
+        print("Continuing Thread...")
+        return True
