@@ -2,8 +2,9 @@
 
 Dependencies
 ```
+Python 3.10+ Only
 pip install keyboard
-pip install win32gui
+pip install pywin32
 ```
 <h3>The purpose of this library is to make it easy to create automation and macros</h3>
 <p>There are many like it but this one is mine</p>
