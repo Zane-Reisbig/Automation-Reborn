@@ -13,16 +13,13 @@ keySender = KeySender( # The keySender object is used to send keys to the active
         "print" : (print, ()), # Functions can be passed with or without arguments
         "printHello" : (print, ("Hello",)), # Arguments can be passed as a tuple, if arguments are passed inline arguments are ignored
         "activate" : (activateWindow, ()), # Functions will be called using the alias, not the function name itself
-        "assert" : (assertTop.assertTopWindow, ()), # Will be called with "Assert" not "assertTop.assertTopWindow"
+        "assert" : (assertTop.assertTopWindow, ()), # Will be called with "assert" not "assertTop.assertTopWindow"
     }
 )
 
-keySender.addSnippet("openMenu", ["alt+o", "alt+c", "$assertTop,Menu"])
-# Able to be called inline with the % prefix as %openMenu
-
 def controlNotepad(toWrite: str):
     keySender.sendKeys([ # Example format for sending keys and using inline functions
-        "$activate,.*Notepad",
+        "$activate,Notepad",
         "$write,{}".format(toWrite),
         "$print,Done"
     ])
@@ -30,13 +27,13 @@ def controlNotepad(toWrite: str):
 
 # Example of a hotkey object
 #               Key combo                  Callback                      Args
-Hotkey(hotkey="ctrl+alt+n", callback=assertTop.assertTopWindow, args=("Notepad",)) # Not used for anything, just for example
+# Hotkey(hotkey="ctrl+alt+n", callback=assertTop.assertTopWindow, args=("Notepad",))
 
-def openClaim():
+def printExample():
     print("This is an example")
 
-manager.ADDPERSISTANT(Hotkey("ctrl+alt+c", openClaim, ())) # Adds a persistant hotkey, which will be added to the hotkey manager
-                                                           # This will persist through module changes
+manager.ADDPERSISTANT(Hotkey("ctrl+alt+c", printExample, ())) # Adds a persistant hotkey, which will be added to the hotkey manager
+                                                              # This will persist through module changes
 
 manager.ADDMAPPING( # Add a mapping to the hotkey manager
     "notePad1", # Alias for the hotkey module
@@ -53,16 +50,11 @@ manager.ADDMAPPING(
     {
         "print2" : Hotkey("alt+2", controlNotepad, ("Two Yea\n",)),
     }
-#  Will not work    
-#  "Alias2" :
-#   {
-#       "print3" : Hotkey("alt+3", controlNotepad, ("Three Yea\n",)),
-#   }
 )
 
 # Finalize will check the mappings for any duplicate hotkeys and warn the user
 # Also does a few more things that aren't really important to the user 
 manager.FINALIZE()
 
-manager.SETMAPPING("notePad1") # Set the starting module after finalizing
+manager.SETMAPPING("notePad1") # Set the starting module after finalizing using the alias defined
 keyboard.wait() # kb.wait sets the main loop for the program
