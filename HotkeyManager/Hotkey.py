@@ -36,7 +36,6 @@ class Hotkey:
                 name=str(self.callback.__name__),
             )
 
-        print(self.args)
         thread.start()
         thread.join()
 
