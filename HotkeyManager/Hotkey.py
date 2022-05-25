@@ -19,7 +19,7 @@ class Hotkey:
         self.args = args
         self.useKwargs = True if type(args) == dict else False
 
-    def triggerCallback(self, passedArgs=None) -> None:
+    def triggerCallback(self, passedArgs=()) -> None:
         print("Waiting For Release")
         waitForRelease(self.hotkey)
 

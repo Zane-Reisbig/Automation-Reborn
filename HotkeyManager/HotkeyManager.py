@@ -157,7 +157,7 @@ class HotkeyManager:
         for i in self.currentMapping.items():
             keyboard.add_hotkey(
                 i[1].getHotkey(),
-                i[1].triggerCallback,tuple(i[1].getArgs()),
+                i[1].triggerCallback, i[1].getArgs(),
             )
         
         self.__registerPersistant()
