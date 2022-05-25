@@ -18,7 +18,7 @@ class KeySender:
     def __init__(self,
         usedModules:dict[str, tuple[types.FunctionType, tuple|dict]],
         debug:bool=False,
-        debugCommands:dict[str, str|int|bool]={},
+        debugCommands:dict[str, str|int|bool|float]={},
         recursionLimit:int=1) -> None:
 
         self.allDelay = None
@@ -210,7 +210,7 @@ class KeySender:
                 handled = True
                 inLineArgs = key.split(",")[1:]
                 amount = 1
-                waitTime = 0.4
+                waitTime = self.allDelay if self.allDelay != None else 0.4
                 if "," in key:
                     cleanKey = key[0:key.index(",")]
                 else:

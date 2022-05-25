@@ -19,22 +19,24 @@ class Hotkey:
         self.args = args
         self.useKwargs = True if type(args) == dict else False
 
-    def triggerCallback(self) -> None:
+    def triggerCallback(self, passedArgs=None) -> None:
         print("Waiting For Release")
         waitForRelease(self.hotkey)
 
         if self.useKwargs:
             thread = Thread(
                 target=self.callback,
-                kwargs=(self.args),
+                kwargs=self.args if passedArgs != None else None,
                 name=str(self.callback.__name__),
             )
         else:
             thread = Thread(
                 target=self.callback,
-                args=(self.args),
+                args=self.args if passedArgs != None else None,
                 name=str(self.callback.__name__),
             )
+
+        print(self.args)
         thread.start()
         thread.join()
 
