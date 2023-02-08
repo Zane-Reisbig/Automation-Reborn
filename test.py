@@ -5,56 +5,80 @@ from HotkeyModules.SendKeys import KeySender
 from HotkeyModules.AssertTopWindow import AssertTopWindow
 from HotkeyModules.ActivateWindow import activateWindow
 
-assertTop = AssertTopWindow(addedSuffix="- Remote") # This is unused in this example, but very handy
-manager = HotkeyManager("ctrl+alt+c") # Controls the switching and storing of hotkeys modules
-                                      # a key combo is required to change the module being used
-keySender = KeySender( # The keySender object is used to send keys to the active window
-    usedModules={ # The functions available to the user to call inline when sending keys 
-        "print" : (print, ()), # Functions can be passed with or without arguments
-        "printHello" : (print, ("Hello",)), # Arguments can be passed as a tuple, if arguments are passed inline arguments are ignored
-        "activate" : (activateWindow, ()), # Functions will be called using the alias, not the function name itself
-        "assert" : (assertTop.assertTopWindow, ()), # Will be called with "assert" not "assertTop.assertTopWindow"
-    }
-)
 
-def controlNotepad(toWrite: str):
-    keySender.sendKeys([ # Example format for sending keys and using inline functions
+def printExample():
+    print("This is an example")
+
+
+def controlNotepad(toWrite: str, keySender: KeySender):
+    keySender.sendKeys([  # Example format for sending keys and using inline functions
         "$activate,Notepad",
+        "$assert,Notepad",
         "$write,{}".format(toWrite),
         "$print,Done"
     ])
 
 
-# Example of a hotkey object
-#               Key combo                  Callback                      Args
-# Hotkey(hotkey="ctrl+alt+n", callback=assertTop.assertTopWindow, args=("Notepad",))
+def main():
+    assertTop = AssertTopWindow(exact=False)
+    # Controls the switching and storing of hotkeys modules
 
-def printExample():
-    print("This is an example")
+    manager = HotkeyManager("ctrl+alt+c")
+    # a key combo is *required* to change the module being used
 
-manager.ADDPERSISTANT(Hotkey("ctrl+alt+c", printExample, ())) # Adds a persistant hotkey, which will be added to the hotkey manager
-                                                              # This will persist through module changes
+    keySender = KeySender(  # The keySender object is used to send keys to the active window
+        inlineCallables={
+            # The functions available to the user to call inline when sending keys
+            # Functions can be passed with or without arguments
+            #   - if arguments are provided in this section, and inline arguments are *also* provided, the inline arguments will be used
+            #   - this allows for default arguments to be set, but also override them if needed
 
-manager.ADDMAPPING( # Add a mapping to the hotkey manager
-    "notePad1", # Alias for the hotkey module
-    {   
-        "print1" : Hotkey("alt+1", controlNotepad, ("One notePad1 Yea\n",)),
-        "print2" : Hotkey("alt+3", controlNotepad, ("Two Notepad2 Yea\n",)),
-    }
-)
+            "print": (print, ()),
+            # Functions can be passed with no arguments
 
-# When adding a mapping only one dictionary can be passed
-# Use multiple ADDMAPPING calls to add multiple hotkey modules to the same manager
-manager.ADDMAPPING(
-    "notePad2",
-    {
-        "print2" : Hotkey("alt+2", controlNotepad, ("Two Yea\n",)),
-    }
-)
+            "printHello": (print, ("Hello",)),
+            # Arguments can be passed as a tuple
 
-# Finalize will check the mappings for any duplicate hotkeys and warn the user
-# Also does a few more things that aren't really important to the user 
-manager.FINALIZE()
+            "activate": (activateWindow, ()),
+            # Functions will be called using the alias, not the function name itself
 
-manager.SETMAPPING("notePad1") # Set the starting module after finalizing using the alias defined
-keyboard.wait() # kb.wait sets the main loop for the program
+            "assert": (assertTop.assertTopWindow, ()),
+            # Will be called with "assert" not "assertTop.assertTopWindow"
+        }
+    )
+
+    manager.ADDPERSISTANT(Hotkey("ctrl+alt+v", printExample, ()))
+    # Adds a persistant hotkey, which will be added to the hotkey manager
+    # This will persist through module changes
+
+    # Example of a hotkey object
+    #               Key combo                  Callback                      Args
+    # Hotkey(hotkey="ctrl+alt+n", callback=assertTop.assertTopWindow, args=("Notepad",))
+    manager.ADDMAPPING(  # Add a mapping to the hotkey manager
+        "notePad1",  # Alias for the hotkey module
+        {
+            "print1": Hotkey("alt+1", controlNotepad, ("One notePad1 Yea\n", keySender,)),
+            "print2": Hotkey("alt+3", controlNotepad, ("Two Notepad2 Yea\n", keySender,)),
+        }
+    )
+
+    # When adding a mapping only one dictionary can be passed
+    # Use multiple ADDMAPPING calls to add multiple hotkey modules to the same manager
+    manager.ADDMAPPING(
+        "notePad2",
+        {
+            "print2": Hotkey("alt+2", controlNotepad, ("Two Yea\n", keySender,)),
+        }
+    )
+
+    # Finalize will check the mappings for any duplicate hotkeys and warn the user
+    # Also does a few more things that aren't really important to the user
+    manager.FINALIZE()
+
+    # Set the starting module after finalizing using the alias defined
+    manager.SETMAPPING("notePad1")
+    keyboard.wait()  # kb.wait sets the main loop for the program
+
+
+if __name__ == "__main__":
+    main()

@@ -5,16 +5,17 @@ from HotkeyModules.ActivateWindow import activateWindow
 
 assertTop = AssertTopWindow(exact=False)
 sender = KeySender(
-    usedModules={
-        "activate" : (activateWindow, ()),
-        "assertTop" : (assertTop.assertTopWindow, ()),
+    inlineCallables={
+        "activate": (activateWindow, ()),
+        "assertTop": (assertTop.assertTopWindow, ()),
     },
     recursionLimit=1
 )
-sender.addSnippet("writeNotePad", ["$write,Hello World\n", "$write,Now I dont have to type all this out again to call it!\n"])
+sender.addSnippet("writeNotePad", [
+                  "$write,Hello World\n", "$write,Now I dont have to type all this out again to call it!\n"])
 # Testing out the recursion limit
 # It works
-# I'm going to try it out and see if raising an exception is the best way to do it 
+# I'm going to try it out and see if raising an exception is the best way to do it
 # or just stop the recursion and continue sending keys
 
 
