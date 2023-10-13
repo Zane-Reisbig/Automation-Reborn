@@ -25,5 +25,5 @@ If you feel like fixing it yourself feel free to branch and create a pull reques
 All the files and all the code files in them are all documented and have comments throughout. <br>
 I might add some more to this description later but for now I don't think it is necessary. <br>
 
-<h3>_Claims_New</h3>
+<h3>_ClaimsNew</h3>
 This is a file containing a **working** example of workplace tasks that can be automated <br>
